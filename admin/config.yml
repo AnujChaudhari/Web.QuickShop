@@ -1,0 +1,54 @@
+backend:
+  name: github
+  repo: Web.QuickShop    # ← इसे बदलें
+  branch: main
+  auth_url: https://sveltia-cms-auth.kc812213.workers.dev/   # ← Cloudflare Worker URL
+
+media_folder: "assets/images/uploads"
+public_folder: "/assets/images/uploads"
+
+collections:
+  - name: "services"
+    label: "Services"
+    folder: "_data/services"
+    create: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Icon Class (FontAwesome)", name: "icon", widget: "string", required: false }
+      - { label: "Order", name: "order", widget: "number", default: 0 }
+
+  - name: "projects"
+    label: "Projects"
+    folder: "_data/projects"
+    create: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Image", name: "imageUrl", widget: "image" }
+      - { label: "Live Demo URL", name: "liveDemoUrl", widget: "string" }
+      - { label: "Order", name: "order", widget: "number", default: 0 }
+
+  - name: "pricing"
+    label: "Pricing Plans"
+    folder: "_data/pricing"
+    create: true
+    fields:
+      - { label: "Plan Name", name: "name", widget: "string" }
+      - { label: "Price", name: "price", widget: "string" }
+      - { label: "Features (List)", name: "features", widget: "list" }
+      - { label: "Button Text", name: "buttonText", widget: "string" }
+      - { label: "Is Popular?", name: "isPopular", widget: "boolean", default: false }
+      - { label: "Order", name: "order", widget: "number", default: 0 }
+
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "_data/testimonials"
+    create: true
+    fields:
+      - { label: "Client Name", name: "clientName", widget: "string" }
+      - { label: "Client Position", name: "clientPosition", widget: "string" }
+      - { label: "Quote", name: "quote", widget: "text" }
+      - { label: "Client Photo", name: "photoUrl", widget: "image" }
+      - { label: "Rating (1-5)", name: "rating", widget: "number", valueType: "int", default: 5 }
