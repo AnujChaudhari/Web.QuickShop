@@ -51,4 +51,4 @@ collections:
       - { label: "Client Position", name: "clientPosition", widget: "string" }
       - { label: "Quote", name: "quote", widget: "text" }
       - { label: "Client Photo", name: "photoUrl", widget: "image" }
-      - { label: "Rating (1-5)", name: "rating", widget: "number", valueType: "int", default: 5 }
+      - { label: "Rating (1-5)", name: "rating", widget: "number", value_type: "int", default: 5 }
