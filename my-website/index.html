@@ -2,528 +2,685 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>Quick Shop | Elite Digital Agency</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- ===== SEO & META TAGS ===== -->
+    <meta name="description" content="Premium web design agency delivering high-performance, conversion-focused websites for elite global clients." />
+    <link rel="canonical" href="https://web-quickshop.pages.dev/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://web-quickshop.pages.dev/" />
+    <meta property="og:title" content="Quick Shop | Elite Digital Agency" />
+    <meta property="og:description" content="Premium web design agency delivering high-performance, conversion-focused websites." />
+    <meta property="og:image" content="https://web-quickshop.pages.dev/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://web-quickshop.pages.dev/" />
+    <meta name="twitter:title" content="Quick Shop | Elite Digital Agency" />
+    <meta name="twitter:description" content="Premium web design agency delivering high-performance, conversion-focused websites." />
+    <meta name="twitter:image" content="https://web-quickshop.pages.dev/og-image.jpg" />
+
+    <!-- ===== FONTS ===== -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <style>
-        /* ===== यहाँ आपका पूरा CSS – वही जो आपने दिया था ===== */
-        :root {
-            --bg-deep: #050505;
-            --surface: rgba(20, 20, 20, 0.6);
-            --gold-light: #F9E596;
-            --gold-base: #D4AF37;
-            --gold-dark: #997A15;
-            --text-main: #FFFFFF;
-            --text-muted: #A1A1AA;
-            --glass-border: rgba(212, 175, 55, 0.15);
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet" />
+
+    <!-- ===== CLOUDFLARE TURNSTILE (For Web3Forms Spam Protection) ===== -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+    <!-- ===== TAILWIND (with custom config) ===== -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        lux: {
+                            base: '#050505',
+                            surface: '#0A0A0A',
+                            panel: '#111111',
+                            border: '#1F1F1F',
+                            gold: {
+                                light: '#F9E596',
+                                DEFAULT: '#D4AF37',
+                                dark: '#997A15',
+                            },
+                            muted: '#888888',
+                            light: '#EBEBEB'
+                        }
+                    }
+                }
+            }
         }
+    </script>
+
+    <!-- ===== LUCIDE ICONS ===== -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <style>
+        /* ===== BASE & SCROLLBAR ===== */
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-deep);
-            color: var(--text-main);
+            background-color: theme('colors.lux.base');
+            color: theme('colors.lux.light');
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
         }
-        .gold-text {
-            background: linear-gradient(to right, var(--gold-light), var(--gold-base), var(--gold-dark));
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: theme('colors.lux.base'); }
+        ::-webkit-scrollbar-thumb { background: theme('colors.lux.border'); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: theme('colors.lux.gold.dark'); }
+
+        /* ===== ACCESSIBILITY ===== */
+        *:focus-visible {
+            outline: 1px solid theme('colors.lux.gold.DEFAULT');
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -9999px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: theme('colors.lux.gold.DEFAULT');
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: 600;
+            z-index: 9999;
+            text-decoration: none;
+        }
+        .skip-link:focus { top: 24px; }
+
+        /* ===== UI COMPONENTS ===== */
+        .text-gradient-gold {
+            background: linear-gradient(135deg, theme('colors.lux.gold.light'), theme('colors.lux.gold.DEFAULT'), theme('colors.lux.gold.dark'));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: 200% auto;
-            animation: shine 5s linear infinite;
         }
-        @keyframes shine {
-            to { background-position: 200% center; }
+
+        .glass-nav {
+            background: rgba(5, 5, 5, 0.65);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
-        .glass-panel {
-            background: var(--surface);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
+
+        .premium-card {
+            background: linear-gradient(180deg, theme('colors.lux.surface') 0%, theme('colors.lux.base') 100%);
+            border: 1px solid theme('colors.lux.border');
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        .luxury-card {
-            background: linear-gradient(145deg, rgba(25,25,25,0.8) 0%, rgba(10,10,10,0.9) 100%);
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        .premium-card:hover {
+            border-color: rgba(212, 175, 55, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 24px 48px -12px rgba(0,0,0,0.9), 0 0 24px -8px rgba(212, 175, 55, 0.08);
         }
-        .luxury-card:hover {
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 20px rgba(212, 175, 55, 0.05);
+
+        .input-lux {
+            background: theme('colors.lux.panel');
+            border: 1px solid theme('colors.lux.border');
+            transition: all 0.4s ease;
         }
-        .glow-elite {
-            box-shadow: 0 0 40px -10px rgba(212, 175, 55, 0.2);
-            border: 1px solid rgba(212, 175, 55, 0.4);
+        .input-lux:focus {
+            background: theme('colors.lux.surface');
+            border-color: theme('colors.lux.gold.DEFAULT');
+            box-shadow: inset 0 0 0 1px theme('colors.lux.gold.DEFAULT');
+            outline: none;
         }
-        .bg-gradient-radial {
-            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+
+        .btn-primary {
+            background: linear-gradient(135deg, theme('colors.lux.gold.DEFAULT'), theme('colors.lux.gold.dark'));
+            color: #000;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
+        .btn-primary:hover, .btn-primary:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px -6px rgba(212, 175, 55, 0.4);
+            filter: brightness(1.05);
+        }
+
+        /* ===== ANIMATIONS ===== */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateY(24px);
+            transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
-        .delay-100 { transition-delay: 100ms; }
-        .delay-200 { transition-delay: 200ms; }
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            color: white;
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
-            z-index: 1000;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+        .video-overlay {
+            background: linear-gradient(to bottom, rgba(5,5,5,0.3) 0%, rgba(5,5,5,0.8) 80%, rgba(5,5,5,1) 100%);
         }
-        .whatsapp-float:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
+
+        .skeleton {
+            background: linear-gradient(90deg, theme('colors.lux.panel') 25%, theme('colors.lux.border') 50%, theme('colors.lux.panel') 75%);
+            background-size: 200% 100%;
+            animation: shimmer 2.5s infinite;
         }
-        .btn-gold {
-            background: linear-gradient(135deg, var(--gold-base), var(--gold-dark));
-            color: #000;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-gold::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255,255,255,0.2);
-            transform: rotate(45deg);
-            transition: all 0.3s ease;
-            opacity: 0;
-        }
-        .btn-gold:hover::after {
-            opacity: 1;
-            transform: rotate(45deg) translate(50%, 50%);
-        }
-        .lux-input {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            transition: all 0.3s ease;
-        }
-        .lux-input:focus {
-            outline: none;
-            border-color: var(--gold-base);
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
         .loader {
-            border: 2px solid rgba(0,0,0,0.2);
+            border: 2px solid rgba(0,0,0,0.1);
             border-left-color: #000;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="selection:bg-yellow-600/30 selection:text-white">
+<body>
 
-    <!-- Subtle Background Texture -->
-    <div class="fixed inset-0 z-[-1] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDUwNTA1Ij48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNCI+PC9yZWN0Pgo8L3N2Zz4=')] opacity-50 pointer-events-none"></div>
+    <!-- ===== SKIP LINK ===== -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/917441167537" class="whatsapp-float group" target="_blank" aria-label="Chat on WhatsApp">
-        <i data-lucide="message-circle" class="w-8 h-8 fill-white"></i>
-        <div class="absolute right-[80px] bg-white text-black px-4 py-2 rounded-xl text-xs font-bold opacity-0 group-hover:opacity-100 transition-all transform translate-x-4 group-hover:translate-x-0 whitespace-nowrap shadow-xl pointer-events-none">
-            Chat with Anuj
-        </div>
-    </a>
+    <!-- ===== FLOATING ACTIONS ===== -->
+    <div class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-[900] flex flex-col gap-4 items-end">
+        
+        <!-- Back to Top Button -->
+        <button id="backToTop" class="bg-lux-panel border border-lux-border text-lux-muted w-12 h-12 rounded-full flex items-center justify-center shadow-2xl opacity-0 pointer-events-none translate-y-4 transition-all duration-500 hover:bg-lux-gold hover:text-black hover:border-lux-gold focus:outline-none" aria-label="Scroll back to top">
+            <i data-lucide="arrow-up" class="w-5 h-5"></i>
+        </button>
 
-    <!-- Header -->
-    <header id="lux1" class="fixed top-0 w-full z-50 px-6 py-6 transition-all duration-300">
-        <div class="max-w-7xl mx-auto glass-panel rounded-full px-8 py-4 flex items-center justify-between shadow-2xl">
-            <div class="flex flex-col justify-center">
-                <a href="#" class="text-2xl md:text-3xl font-extrabold tracking-widest uppercase text-white leading-none mb-1 hover:opacity-80 transition-opacity">
-                    [ QUICK SHOP ]
-                </a>
-                <span class="text-[10px] md:text-xs font-medium tracking-[0.2em] text-zinc-400 uppercase">
-                    Founder: <span class="gold-text">Anuj Chaudhary</span>
+        <!-- WhatsApp Button -->
+        <a href="https://wa.me/917441167537" class="bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-[0_8px_24px_rgba(37,211,102,0.3)] hover:scale-105 transition-transform duration-300" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+            <i data-lucide="message-circle" class="w-6 h-6 fill-white"></i>
+        </a>
+
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header id="navbar" class="fixed top-0 w-full z-50 px-4 sm:px-6 py-6 transition-all duration-500">
+        <div class="max-w-7xl mx-auto glass-nav rounded-2xl px-6 py-4 flex items-center justify-between shadow-2xl">
+            <a href="#" class="group flex flex-col focus:outline-none" aria-label="Quick Shop Home">
+                <span class="text-xl sm:text-2xl font-bold tracking-[0.15em] uppercase text-white group-hover:text-lux-gold transition-colors">
+                    Quick Shop
                 </span>
-            </div>
-            <nav class="hidden lg:flex items-center gap-10 text-[11px] font-bold tracking-[0.15em] uppercase text-zinc-300">
-                <a href="#services" class="hover:text-white transition-colors">Services</a>
-                <a href="#work" class="hover:text-white transition-colors">Portfolio</a>
-                <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
-                <a href="#testimonials" class="hover:text-white transition-colors">Testimonials</a>
-                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
-            </nav>
-            <a href="#contact" class="hidden md:inline-flex btn-gold px-7 py-3 rounded-full text-xs font-bold uppercase tracking-widest">
-                Inquire
+                <span class="text-[10px] font-medium tracking-[0.25em] text-lux-muted uppercase mt-1">
+                    By Anuj Chaudhary
+                </span>
             </a>
+
+            <nav class="hidden lg:flex items-center gap-10 text-xs font-semibold tracking-[0.2em] uppercase text-lux-muted" aria-label="Main Navigation">
+                <a href="#services" class="hover:text-white transition-colors">Services</a>
+                <a href="#work" class="hover:text-white transition-colors">Work</a>
+                <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+                <a href="#testimonials" class="hover:text-white transition-colors">Clientele</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <a href="#contact" class="hidden md:inline-flex btn-primary px-7 py-3 rounded-xl text-xs font-bold uppercase tracking-widest text-center">
+                    Inquire
+                </a>
+                <button id="menuToggle" class="lg:hidden text-white p-2 -mr-2 hover:text-lux-gold transition-colors rounded-lg" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle Menu">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative pt-64 pb-40 px-6 overflow-hidden flex items-center min-h-screen">
-        <div class="absolute inset-0 bg-gradient-radial z-[-1]"></div>
-        <div class="max-w-5xl mx-auto text-center reveal active relative z-10">
-            <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-[var(--gold-base)]/30 bg-[var(--gold-base)]/5 backdrop-blur-md mb-8">
-                <span class="w-1.5 h-1.5 rounded-full bg-[var(--gold-base)] animate-pulse"></span>
-                <span class="text-[10px] font-bold uppercase tracking-[0.3em] gold-text">Founded by Anuj Chaudhary</span>
-            </div>
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1] tracking-tight">
-                Designing Digital Experiences <br>
-                <span class="font-[Playfair_Display] italic font-normal text-zinc-400">That Define Brands</span>
-            </h1>
-            <p class="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto mb-16 leading-relaxed font-light">
-                Quick Shop is a premium web design agency delivering high-performance, conversion-focused websites for elite global clients.
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <a href="#work" class="w-full sm:w-auto px-10 py-5 bg-transparent border border-white text-white rounded-full font-bold text-sm tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-300">
-                    Explore Our Work
-                </a>
-                <a href="#contact" class="w-full sm:w-auto px-10 py-5 btn-gold rounded-full font-bold text-sm tracking-widest uppercase shadow-[0_0_30px_rgba(212,175,55,0.2)]">
-                    Start Your Project
-                </a>
-            </div>
-        </div>
-    </section>
+    <!-- ===== MOBILE MENU ===== -->
+    <div id="mobileMenu" class="fixed inset-0 bg-lux-base/95 backdrop-blur-3xl z-[60] opacity-0 pointer-events-none flex flex-col items-center justify-center transition-opacity duration-500">
+        <button id="closeMenuBtn" class="absolute top-8 right-8 text-white p-3 hover:text-lux-gold transition-colors" aria-label="Close Menu">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <nav class="flex flex-col items-center gap-8 text-lg font-medium tracking-[0.2em] uppercase text-lux-muted" aria-label="Mobile Navigation">
+            <a href="#services" class="hover:text-white transition-colors">Services</a>
+            <a href="#work" class="hover:text-white transition-colors">Work</a>
+            <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+            <a href="#testimonials" class="hover:text-white transition-colors">Clientele</a>
+            <a href="#contact" class="btn-primary px-10 py-4 rounded-xl text-xs mt-6 text-black">Start Project</a>
+        </nav>
+    </div>
 
-    <!-- Services Section (dynamic) -->
-    <section id="services" class="py-32 px-6 bg-black/40">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20 reveal">
-                <h2 class="text-[10px] font-bold tracking-[0.3em] uppercase gold-text mb-4">What We Do</h2>
-                <h3 class="text-4xl md:text-5xl font-light tracking-tight">Our Core Services</h3>
-            </div>
-            <div id="servicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"></div>
-        </div>
-    </section>
+    <!-- ===== MAIN CONTENT ===== -->
+    <main id="main-content">
 
-    <!-- Portfolio Section (dynamic) -->
-    <section id="work" class="py-32 px-6 bg-black">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-20 reveal">
-                <div>
-                    <h2 class="text-[10px] font-bold tracking-[0.3em] uppercase gold-text mb-4">Selected Works</h2>
-                    <h3 class="text-4xl md:text-5xl font-light tracking-tight">Digital Masterpieces</h3>
+        <!-- ===== HERO SECTION ===== -->
+        <section class="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4 overflow-hidden">
+            <!-- Video with preload="auto" applied -->
+            <video class="absolute inset-0 w-full h-full object-cover z-0 opacity-40" autoplay muted loop playsinline preload="auto" poster="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1920" aria-hidden="true">
+                <source src="https://videos.pexels.com/video-files/3195394/3195394-uhd_2560_1440_25fps.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 video-overlay z-10"></div>
+
+            <div class="relative z-20 max-w-5xl mx-auto text-center reveal active px-4 sm:px-6">
+                <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-lux-border bg-lux-surface/50 backdrop-blur-md mb-10 shadow-lg">
+                    <span class="w-2 h-2 rounded-full bg-lux-gold animate-pulse" aria-hidden="true"></span>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-gradient-gold">Digital Excellence</span>
                 </div>
-                <a href="https://www.instagram.com/quick_shop_pro" target="_blank" class="hidden md:flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors border-b border-zinc-700 pb-1">
-                    View More on Instagram <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                </a>
-            </div>
-            <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"></div>
-        </div>
-    </section>
 
-    <!-- Pricing Section (dynamic) -->
-    <section id="pricing" class="py-32 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-24 reveal">
-                <h2 class="text-[10px] font-bold tracking-[0.3em] uppercase gold-text mb-4">Investment</h2>
-                <h3 class="text-4xl md:text-5xl font-light tracking-tight mb-6">Transparent Agency Pricing</h3>
-            </div>
-            <div id="pricingGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center"></div>
-        </div>
-    </section>
+                <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.05] tracking-tight text-white drop-shadow-2xl">
+                    Crafting Interfaces <br class="hidden sm:block" />
+                    <span class="font-serif italic font-normal text-lux-light">That Command Attention</span>
+                </h1>
 
-    <!-- Testimonials Section (dynamic) -->
-    <section id="testimonials" class="py-32 px-6 bg-black/60">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20 reveal">
-                <h2 class="text-[10px] font-bold tracking-[0.3em] uppercase gold-text mb-4">Client Love</h2>
-                <h3 class="text-4xl md:text-5xl font-light tracking-tight">What Our Clients Say</h3>
-            </div>
-            <div id="testimonialsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-        </div>
-    </section>
+                <p class="text-lux-muted text-base sm:text-lg lg:text-xl max-w-2xl mx-auto mb-12 leading-[1.8] font-light drop-shadow-md">
+                    Quick Shop is a premier design agency delivering high-octane, conversion-focused web experiences for elite global brands.
+                </p>
 
-    <!-- Contact Section (working with Web3Forms) -->
-    <section id="contact" class="py-32 px-6 bg-zinc-950/50">
-        <div class="max-w-6xl mx-auto">
-            <div class="luxury-card p-10 md:p-20 rounded-[3rem] grid grid-cols-1 lg:grid-cols-5 gap-16 items-center border border-zinc-800">
-                <div class="lg:col-span-2">
-                    <h2 class="text-[10px] font-bold tracking-[0.3em] uppercase gold-text mb-4">Let's Connect</h2>
-                    <h3 class="text-4xl md:text-5xl font-light mb-8 leading-tight">Begin Your <br>Digital Journey.</h3>
-                    <p class="text-zinc-400 text-sm leading-relaxed mb-10 font-light">Partner directly with founder Anuj Chaudhary to elevate your brand to the global standard. Fill out the form, and expect a response within 24 hours.</p>
-                    <a href="https://www.instagram.com/quick_shop_pro" target="_blank" class="inline-flex items-center gap-4 group">
-                        <div class="w-12 h-12 rounded-full border border-zinc-700 flex items-center justify-center group-hover:border-[var(--gold-base)] transition-colors">
-                            <i data-lucide="instagram" class="w-5 h-5 text-zinc-400 group-hover:text-[var(--gold-base)] transition-colors"></i>
-                        </div>
-                        <span class="text-xs uppercase tracking-widest font-bold text-zinc-300 group-hover:text-white transition-colors">Follow on Instagram</span>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                    <a href="#work" class="w-full sm:w-auto px-10 py-4 bg-lux-panel border border-lux-border text-white rounded-xl font-bold text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-lux-base transition-all duration-400 text-center">
+                        View Portfolio
+                    </a>
+                    <a href="#contact" class="w-full sm:w-auto px-10 py-4 btn-primary rounded-xl font-bold text-xs tracking-[0.2em] uppercase text-center">
+                        Consultation
                     </a>
                 </div>
-                <div class="lg:col-span-3">
-                    <form action="https://api.web3forms.com/submit" method="POST" id="luxform" class="space-y-6">
-                        <input type="hidden" name="access_key" value="170a4801-dfa1-4a53-be12-c217b33aab3b">
-                        <input type="hidden" name="subject" value="New Premium Project Inquiry - Quick Shop">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-2">Your Name</label>
-                                <input type="text" name="name" placeholder="John Doe" required class="w-full lux-input rounded-xl px-6 py-4 text-sm font-light">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-2">Your Email</label>
-                                <input type="email" name="email" placeholder="john@company.com" required class="w-full lux-input rounded-xl px-6 py-4 text-sm font-light">
-                            </div>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-2">Project Details</label>
-                            <textarea name="message" placeholder="Describe your vision and requirements..." required rows="4" class="w-full lux-input rounded-xl px-6 py-4 text-sm font-light resize-none"></textarea>
-                        </div>
-                        <button type="submit" class="w-full btn-gold py-5 rounded-xl font-bold uppercase tracking-widest text-xs flex justify-center items-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed">
-                            <span id="btn-text">Submit Request</span>
-                            <div id="btn-loader" class="loader hidden"></div>
-                        </button>
-                        <p id="form-result" class="text-center text-xs mt-4 font-medium tracking-wide"></p>
-                    </form>
+            </div>
+        </section>
+
+        <!-- ===== SERVICES SECTION ===== -->
+        <section id="services" class="py-24 sm:py-32 px-4 sm:px-6 bg-lux-base">
+            <div class="max-w-7xl mx-auto">
+                <header class="text-center mb-20 reveal">
+                    <h2 class="text-[10px] font-bold tracking-[0.25em] uppercase text-gradient-gold mb-4">Our Expertise</h2>
+                    <h3 class="text-3xl sm:text-5xl font-light tracking-tight font-serif italic text-white">Elevating Digital Standards</h3>
+                </header>
+                <div id="servicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="skeleton h-[280px] rounded-2xl"></div>
+                    <div class="skeleton h-[280px] rounded-2xl"></div>
+                    <div class="skeleton h-[280px] rounded-2xl"></div>
+                    <div class="skeleton h-[280px] rounded-2xl"></div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer class="py-16 px-6 border-t border-zinc-900 bg-black">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
-            <div class="flex flex-col">
-                <span class="text-2xl font-bold tracking-widest uppercase text-white mb-2">[ QUICK SHOP ]</span>
-                <span class="text-[10px] font-medium tracking-[0.2em] text-zinc-500 uppercase">Founded by Anuj Chaudhary</span>
+        <!-- ===== PORTFOLIO SECTION ===== -->
+        <section id="work" class="py-24 sm:py-32 px-4 sm:px-6 bg-lux-surface">
+            <div class="max-w-7xl mx-auto">
+                <header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 reveal">
+                    <div>
+                        <h2 class="text-[10px] font-bold tracking-[0.25em] uppercase text-gradient-gold mb-4">Selected Works</h2>
+                        <h3 class="text-3xl sm:text-5xl font-light tracking-tight font-serif italic text-white">Digital Masterpieces</h3>
+                    </div>
+                    <a href="https://www.instagram.com/quick_shop_pro" target="_blank" rel="noopener noreferrer" class="hidden md:flex items-center gap-3 text-xs font-semibold tracking-[0.2em] uppercase text-lux-muted hover:text-lux-gold transition-colors mt-4 md:mt-0 group">
+                        View Archive
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </header>
+                <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                    <div class="skeleton h-[400px] rounded-2xl"></div>
+                    <div class="skeleton h-[400px] rounded-2xl"></div>
+                </div>
             </div>
-            <div class="text-[10px] text-zinc-600 uppercase tracking-[0.3em] font-light">© 2026 Quick Shop Agency. All Rights Reserved.</div>
-            <div class="flex gap-6 justify-center">
-                <a href="https://www.instagram.com/quick_shop_pro" target="_blank" class="w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center hover:border-[var(--gold-base)] hover:bg-[var(--gold-base)]/10 transition-all group">
-                    <i data-lucide="instagram" class="w-4 h-4 text-zinc-500 group-hover:text-[var(--gold-base)] transition-colors"></i>
+        </section>
+
+        <!-- ===== PRICING SECTION ===== -->
+        <section id="pricing" class="py-24 sm:py-32 px-4 sm:px-6 bg-lux-base border-t border-lux-border">
+            <div class="max-w-7xl mx-auto">
+                <header class="text-center mb-20 reveal">
+                    <h2 class="text-[10px] font-bold tracking-[0.25em] uppercase text-gradient-gold mb-4">Investment</h2>
+                    <h3 class="text-3xl sm:text-5xl font-light tracking-tight font-serif italic text-white">Transparent Agency Pricing</h3>
+                </header>
+                <div id="pricingGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-center">
+                    <div class="skeleton h-[450px] rounded-2xl"></div>
+                    <div class="skeleton h-[500px] rounded-2xl"></div>
+                    <div class="skeleton h-[450px] rounded-2xl"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== TESTIMONIALS SECTION ===== -->
+        <section id="testimonials" class="py-24 sm:py-32 px-4 sm:px-6 bg-lux-surface border-t border-lux-border">
+            <div class="max-w-7xl mx-auto">
+                <header class="text-center mb-20 reveal">
+                    <h2 class="text-[10px] font-bold tracking-[0.25em] uppercase text-gradient-gold mb-4">Clientele</h2>
+                    <h3 class="text-3xl sm:text-5xl font-light tracking-tight font-serif italic text-white">What Our Partners Say</h3>
+                </header>
+                <div id="testimonialsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                    <div class="skeleton h-[280px] rounded-2xl"></div>
+                    <div class="skeleton h-[280px] rounded-2xl"></div>
+                    <div class="skeleton h-[280px] rounded-2xl"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CONTACT SECTION ===== -->
+        <section id="contact" class="py-24 sm:py-32 px-4 sm:px-6 relative overflow-hidden bg-lux-base border-t border-lux-border">
+            <div class="max-w-6xl mx-auto relative z-10">
+                <div class="premium-card p-8 sm:p-12 lg:p-20 rounded-3xl grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h2 class="text-[10px] font-bold tracking-[0.25em] uppercase text-gradient-gold mb-4">Initiate Contact</h2>
+                        <h3 class="text-4xl sm:text-5xl lg:text-6xl font-serif italic mb-6 leading-tight text-white">Let's Build <br />Something Iconic.</h3>
+                        <p class="text-lux-muted text-base leading-[1.8] mb-10 font-light max-w-md">
+                            Partner directly with Anuj Chaudhary to elevate your brand. Submit your details, and expect a strategic response within 24 hours.
+                        </p>
+                        
+                        <a href="mailto:hello@quickshop.agency" class="inline-flex items-center gap-4 group focus:outline-none">
+                            <div class="w-12 h-12 rounded-full border border-lux-border flex items-center justify-center group-hover:border-lux-gold group-hover:bg-lux-gold/5 transition-all duration-400">
+                                <i data-lucide="mail" class="w-5 h-5 text-lux-muted group-hover:text-lux-gold transition-colors"></i>
+                            </div>
+                            <span class="text-[10px] uppercase tracking-[0.25em] font-bold text-lux-light group-hover:text-white transition-colors">hello@quickshop.agency</span>
+                        </a>
+                    </div>
+
+                    <div class="bg-lux-surface p-6 sm:p-10 rounded-2xl border border-lux-border shadow-2xl">
+                        <form id="contactForm" class="space-y-6" novalidate>
+                            <input type="hidden" name="access_key" value="170a4801-dfa1-4a53-be12-c217b33aab3b">
+                            <input type="hidden" name="subject" value="New Project Inquiry - Quick Shop">
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="text-[10px] uppercase tracking-[0.2em] text-lux-muted font-bold block" for="name">Full Name</label>
+                                    <input type="text" id="name" name="name" required aria-required="true" class="w-full input-lux rounded-lg px-4 py-3.5 text-sm font-light text-white placeholder:text-lux-muted/40" placeholder="e.g. Jane Doe">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] uppercase tracking-[0.2em] text-lux-muted font-bold block" for="email">Email Address</label>
+                                    <input type="email" id="email" name="email" required aria-required="true" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="w-full input-lux rounded-lg px-4 py-3.5 text-sm font-light text-white placeholder:text-lux-muted/40" placeholder="hello@brand.com">
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="text-[10px] uppercase tracking-[0.2em] text-lux-muted font-bold block" for="message">Project Vision</label>
+                                <textarea id="message" name="message" required aria-required="true" rows="3" class="w-full input-lux rounded-lg px-4 py-3.5 text-sm font-light text-white resize-y min-h-[100px] placeholder:text-lux-muted/40" placeholder="Tell us about your goals..."></textarea>
+                            </div>
+
+                            <!-- Cloudflare Turnstile Integration -->
+                            <div class="cf-turnstile" data-sitekey="0x4AAAAAAAWy7Z0FjR1l1z3N" data-theme="dark"></div>
+
+                            <button type="submit" class="w-full btn-primary py-4 rounded-lg font-bold uppercase tracking-[0.2em] text-[10px] flex justify-center items-center gap-3 disabled:opacity-50 mt-2">
+                                <span id="btnText">Submit Inquiry</span>
+                                <div id="btnLoader" class="loader hidden" aria-hidden="true"></div>
+                            </button>
+
+                            <p id="formResult" class="text-center text-xs mt-4 font-medium min-h-[16px]" role="status" aria-live="polite"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="py-12 px-6 border-t border-lux-border bg-lux-base">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+                <span class="text-lg font-bold tracking-[0.2em] uppercase text-white block mb-1">Quick Shop</span>
+                <span class="text-[10px] text-lux-muted uppercase tracking-[0.2em]">Digital Agency</span>
+            </div>
+            
+            <!-- Social Links -->
+            <div class="flex items-center gap-6">
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="text-lux-muted hover:text-lux-gold transition-colors" aria-label="Twitter">
+                    <i data-lucide="twitter" class="w-5 h-5"></i>
                 </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="text-lux-muted hover:text-lux-gold transition-colors" aria-label="LinkedIn">
+                    <i data-lucide="linkedin" class="w-5 h-5"></i>
+                </a>
+                <a href="https://www.instagram.com/quick_shop_pro" target="_blank" rel="noopener noreferrer" class="text-lux-muted hover:text-lux-gold transition-colors" aria-label="Instagram">
+                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                </a>
+            </div>
+
+            <div class="text-[10px] text-lux-muted uppercase tracking-[0.2em] font-light text-center md:text-right">
+                &copy; 2026 Quick Shop. All Rights Reserved.
             </div>
         </div>
     </footer>
 
+    <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // ===== Lucide Icons =====
-        lucide.createIcons();
+        // CONFIG
+        const CONFIG = {
+            FORM_ACTION: 'https://api.web3forms.com/submit',
+            CACHE_TTL: 300000,
+        };
 
-        // ===== Scroll Reveal =====
-        const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
-        const observer = new IntersectionObserver((entries) => {
+        // UI RENDERING HELPERS
+        function escapeHtml(str) {
+            if (!str) return '';
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return str.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        async function fetchWithCache(url, cacheKey, ttl = CONFIG.CACHE_TTL) {
+            const cached = localStorage.getItem(cacheKey);
+            if (cached) {
+                try {
+                    const { data, timestamp } = JSON.parse(cached);
+                    if (Date.now() - timestamp < ttl) return data;
+                } catch (_) {}
+            }
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+            localStorage.setItem(cacheKey, JSON.stringify({ data, timestamp: Date.now() }));
+            return data;
+        }
+
+        function renderService(s) {
+            return `
+                <article class="premium-card p-8 sm:p-10 rounded-2xl reveal text-center flex flex-col items-center h-full">
+                    <div class="w-14 h-14 rounded-full bg-lux-gold/10 flex items-center justify-center mb-6">
+                        <i data-lucide="${escapeHtml(s.icon || 'layout')}" class="w-6 h-6 text-lux-gold"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold mb-3 text-white tracking-wide">${escapeHtml(s.title)}</h4>
+                    <p class="text-lux-muted text-sm leading-[1.8] font-light">${escapeHtml(s.description)}</p>
+                </article>
+            `;
+        }
+
+        function renderProject(p) {
+            return `
+                <a href="${escapeHtml(p.liveDemoUrl)}" target="_blank" rel="noopener noreferrer" class="group reveal block rounded-2xl">
+                    <div class="relative overflow-hidden rounded-2xl aspect-[4/3] premium-card">
+                        <img src="${escapeHtml(p.imageUrl)}" alt="${escapeHtml(p.title)}" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-700" loading="lazy" />
+                        <div class="absolute inset-0 bg-lux-base/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                        <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end opacity-0 group-hover:opacity-100 transition-opacity duration-500 translate-y-4 group-hover:translate-y-0">
+                            <span class="glass-nav px-6 py-3 rounded-lg text-white text-[10px] font-bold tracking-[0.2em] uppercase flex items-center gap-2">
+                                View Live <i data-lucide="external-link" class="w-3 h-3"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-between items-center px-2">
+                        <h4 class="text-xl font-medium text-white group-hover:text-lux-gold transition-colors">${escapeHtml(p.title)}</h4>
+                        <p class="text-[10px] text-lux-muted uppercase tracking-[0.2em]">${escapeHtml(p.category)}</p>
+                    </div>
+                </a>
+            `;
+        }
+
+        function renderPricing(p) {
+            const isPop = p.isPopular;
+            return `
+                <article class="premium-card p-8 sm:p-10 rounded-3xl reveal flex flex-col h-full ${isPop ? 'border-lux-gold/40 shadow-[0_0_30px_rgba(212,175,55,0.1)] lg:-translate-y-4' : ''}">
+                    ${isPop ? '<div class="self-center bg-lux-gold text-black text-[10px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.2em] mb-6">Most Popular</div>' : ''}
+                    
+                    <div class="text-center mb-8 ${!isPop ? 'mt-4' : ''}">
+                        <h4 class="text-lg font-semibold mb-2 text-white">${escapeHtml(p.name)}</h4>
+                        <div class="text-4xl font-bold my-4 text-gradient-gold">${escapeHtml(p.price)}</div>
+                        <p class="text-xs text-lux-muted uppercase tracking-widest">${escapeHtml(p.description || 'Premium Package')}</p>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-10 text-sm text-lux-light flex-grow">
+                        ${p.features ? p.features.map(f => `
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-4 h-4 text-lux-gold shrink-0 mt-0.5"></i> 
+                                <span class="leading-relaxed font-light">${escapeHtml(f)}</span>
+                            </li>
+                        `).join('') : ''}
+                    </ul>
+                    
+                    <a href="#contact" class="block w-full py-4 border ${isPop ? 'btn-primary border-none' : 'border-lux-border hover:border-white hover:bg-white hover:text-black'} rounded-xl text-center text-[10px] font-bold uppercase tracking-[0.2em] transition-all">
+                        ${escapeHtml(p.buttonText || 'Select Plan')}
+                    </a>
+                </article>
+            `;
+        }
+
+        function renderTestimonial(t) {
+            const rating = t.rating || 5;
+            const stars = Array(5).fill(0).map((_, i) => 
+                `<i data-lucide="star" class="w-3.5 h-3.5 ${i < rating ? 'fill-lux-gold text-lux-gold' : 'text-lux-border'}"></i>`
+            ).join('');
+
+            return `
+                <article class="premium-card p-8 rounded-2xl reveal flex flex-col h-full">
+                    <div class="flex gap-1 mb-6">${stars}</div>
+                    <blockquote class="text-lux-light text-sm leading-[1.8] flex-grow mb-8 italic font-light">
+                        "${escapeHtml(t.quote)}"
+                    </blockquote>
+                    <div class="flex items-center gap-4 mt-auto border-t border-lux-border/50 pt-6">
+                        ${t.photoUrl ? `<img src="${escapeHtml(t.photoUrl)}" alt="Client" class="w-10 h-10 rounded-full object-cover" loading="lazy">` : `<div class="w-10 h-10 rounded-full bg-lux-panel border border-lux-border flex items-center justify-center text-lux-muted"><i data-lucide="user" class="w-4 h-4"></i></div>`}
+                        <div>
+                            <h4 class="font-bold text-white text-xs tracking-wide">${escapeHtml(t.clientName)}</h4>
+                            <p class="text-[10px] text-lux-muted uppercase tracking-widest mt-1">${escapeHtml(t.clientPosition)}</p>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        async function loadSection(endpoint, containerId, renderFn, fallbackMsg) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            try {
+                const data = await fetchWithCache(`/_data/${endpoint}.json`, `${endpoint}_cache`);
+                if (!data || data.length === 0) throw new Error("No data");
+                container.innerHTML = data.map(renderFn).join('');
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            } catch (err) {
+                container.innerHTML = `<div class="col-span-full text-center text-lux-muted font-light text-sm">${fallbackMsg}</div>`;
+            }
+        }
+
+        // DOM READY
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSection('services', 'servicesGrid', renderService, 'Services data pending integration.');
+            loadSection('projects', 'projectsGrid', renderProject, 'Portfolio data pending integration.');
+            loadSection('pricing', 'pricingGrid', renderPricing, 'Pricing packages pending integration.');
+            loadSection('testimonials', 'testimonialsGrid', renderTestimonial, 'Client testimonials pending integration.');
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        });
+
+        // STRICT BOOLEAN MOBILE MENU TOGGLE
+        let isMobileMenuOpen = false;
+        const menuToggle = document.getElementById('menuToggle');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        function toggleMenu(forceState = null) {
+            if (forceState !== null) {
+                isMobileMenuOpen = forceState;
+            } else {
+                isMobileMenuOpen = !isMobileMenuOpen;
+            }
+
+            if (isMobileMenuOpen) {
+                mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+                menuToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+        }
+
+        menuToggle.addEventListener('click', () => toggleMenu());
+        closeMenuBtn.addEventListener('click', () => toggleMenu(false));
+        document.querySelectorAll('#mobileMenu a').forEach(link => link.addEventListener('click', () => toggleMenu(false)));
+
+        // SCROLL OBSERVER
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('active');
             });
-        }, observerOptions);
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-        // ===== Header Scroll Effect =====
-        const header = document.getElementById('lux1');
+        // HEADER SCROLL & BACK TO TOP BUTTON
+        const header = document.getElementById('navbar');
+        const backToTopBtn = document.getElementById('backToTop');
+        
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('py-4');
-                header.classList.remove('py-6');
+            // Header shrink
+            header.classList.toggle('py-3', window.scrollY > 50);
+            header.classList.toggle('py-6', window.scrollY <= 50);
+            
+            // Back to Top visibility
+            if (window.scrollY > 600) {
+                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+                backToTopBtn.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
             } else {
-                header.classList.add('py-6');
-                header.classList.remove('py-4');
+                backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+                backToTopBtn.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
             }
         });
 
-        // ===== CMS Data Fetching =====
-        // Helper: सुरक्षित HTML एस्केप
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-
-        // ----- Services -----
-        async function loadServices() {
-            try {
-                const res = await fetch('/_data/services.json');
-                if (!res.ok) throw new Error('Services not found');
-                const services = await res.json();
-                const container = document.getElementById('servicesGrid');
-                if (!container) return;
-                if (!services || services.length === 0) {
-                    container.innerHTML = '<div class="col-span-full text-center text-zinc-500">No services added yet.</div>';
-                    return;
-                }
-                container.innerHTML = services.map(s => `
-                    <div class="luxury-card p-6 rounded-2xl text-center reveal">
-                        <div class="text-5xl mb-4 text-[var(--gold-base)]">
-                            ${s.icon ? `<i class="fa-solid ${s.icon}"></i>` : '⚡'}
-                        </div>
-                        <h4 class="text-xl font-semibold mb-2">${escapeHtml(s.title)}</h4>
-                        <p class="text-zinc-400 text-sm">${escapeHtml(s.description)}</p>
-                    </div>
-                `).join('');
-            } catch (err) {
-                console.error('Services error:', err);
-                document.getElementById('servicesGrid').innerHTML = '<div class="col-span-full text-center text-zinc-500">Could not load services.</div>';
-            }
-        }
-
-        // ----- Projects -----
-        async function loadProjects() {
-            try {
-                const res = await fetch('/_data/projects.json');
-                if (!res.ok) throw new Error('Projects not found');
-                const projects = await res.json();
-                const container = document.getElementById('projectsGrid');
-                if (!container) return;
-                if (!projects || projects.length === 0) {
-                    container.innerHTML = '<div class="col-span-full text-center text-zinc-500">No projects yet.</div>';
-                    return;
-                }
-                container.innerHTML = projects.map(p => `
-                    <a href="${escapeHtml(p.liveDemoUrl)}" target="_blank" class="group reveal block">
-                        <div class="relative overflow-hidden rounded-2xl aspect-[4/3] mb-6 luxury-card bg-zinc-900">
-                            <img src="${escapeHtml(p.imageUrl)}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                                <span class="glass-panel px-6 py-3 rounded-full text-white text-sm font-bold tracking-widest uppercase flex items-center gap-2">
-                                    View Live <i data-lucide="external-link" class="w-4 h-4"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <h4 class="text-xl font-medium mb-1 group-hover:text-[var(--gold-base)] transition-colors">${escapeHtml(p.title)}</h4>
-                        <p class="text-xs text-zinc-500 uppercase tracking-widest">${escapeHtml(p.category)}</p>
-                    </a>
-                `).join('');
-                lucide.createIcons(); // नए icons को initialize करें
-            } catch (err) {
-                console.error('Projects error:', err);
-                document.getElementById('projectsGrid').innerHTML = '<div class="col-span-full text-center text-zinc-500">Could not load projects.</div>';
-            }
-        }
-
-        // ----- Pricing -----
-        async function loadPricing() {
-            try {
-                const res = await fetch('/_data/pricing.json');
-                if (!res.ok) throw new Error('Pricing not found');
-                const pricing = await res.json();
-                const container = document.getElementById('pricingGrid');
-                if (!container) return;
-                if (!pricing || pricing.length === 0) {
-                    container.innerHTML = '<div class="col-span-full text-center text-zinc-500">No pricing plans yet.</div>';
-                    return;
-                }
-                container.innerHTML = pricing.map(p => `
-                    <div class="luxury-card p-10 rounded-[2rem] reveal ${p.isPopular ? 'glow-elite md:scale-105 relative z-10' : ''}">
-                        ${p.isPopular ? '<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-[var(--gold-base)] text-black text-[9px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.2em]">Most Popular</div>' : ''}
-                        <h4 class="text-white text-lg font-medium mb-2">${escapeHtml(p.name)}</h4>
-                        <div class="text-4xl font-light my-6">${escapeHtml(p.price)}</div>
-                        <ul class="space-y-3 mb-8 text-sm text-zinc-400 font-light">
-                            ${p.features ? p.features.map(f => `<li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-white"></i> ${escapeHtml(f)}</li>`).join('') : ''}
-                        </ul>
-                        <a href="#contact" class="block w-full py-4 border border-white/20 rounded-xl text-center text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors">${escapeHtml(p.buttonText)}</a>
-                    </div>
-                `).join('');
-                lucide.createIcons();
-            } catch (err) {
-                console.error('Pricing error:', err);
-                document.getElementById('pricingGrid').innerHTML = '<div class="col-span-full text-center text-zinc-500">Could not load pricing.</div>';
-            }
-        }
-
-        // ----- Testimonials -----
-        async function loadTestimonials() {
-            try {
-                const res = await fetch('/_data/testimonials.json');
-                if (!res.ok) throw new Error('Testimonials not found');
-                const testimonials = await res.json();
-                const container = document.getElementById('testimonialsGrid');
-                if (!container) return;
-                if (!testimonials || testimonials.length === 0) {
-                    container.innerHTML = '<div class="col-span-full text-center text-zinc-500">No testimonials yet.</div>';
-                    return;
-                }
-                container.innerHTML = testimonials.map(t => `
-                    <div class="luxury-card p-6 rounded-2xl reveal">
-                        <div class="flex items-center gap-4 mb-4">
-                            ${t.photoUrl ? `<img src="${escapeHtml(t.photoUrl)}" class="w-14 h-14 rounded-full object-cover">` : '<div class="w-14 h-14 rounded-full bg-zinc-800 flex items-center justify-center text-2xl">👤</div>'}
-                            <div>
-                                <h4 class="font-bold">${escapeHtml(t.clientName)}</h4>
-                                <p class="text-xs text-zinc-400">${escapeHtml(t.clientPosition)}</p>
-                            </div>
-                        </div>
-                        <p class="text-zinc-300 italic">“${escapeHtml(t.quote)}”</p>
-                        <div class="mt-3 text-yellow-500 text-sm">${'⭐'.repeat(t.rating || 5)}${'☆'.repeat(5 - (t.rating || 5))}</div>
-                    </div>
-                `).join('');
-            } catch (err) {
-                console.error('Testimonials error:', err);
-                document.getElementById('testimonialsGrid').innerHTML = '<div class="col-span-full text-center text-zinc-500">Could not load testimonials.</div>';
-            }
-        }
-
-        // ----- सभी डेटा लोड करें -----
-        document.addEventListener('DOMContentLoaded', () => {
-            loadServices();
-            loadProjects();
-            loadPricing();
-            loadTestimonials();
+        // Back to top click handler
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // ===== Contact Form (Web3Forms) =====
-        const form = document.getElementById('luxform');
-        const result = document.getElementById('form-result');
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const btnText = document.getElementById('btn-text');
-        const btnLoader = document.getElementById('btn-loader');
-
-        form.addEventListener('submit', function(e) {
+        // FORM SUBMISSION (Turnstile validation logic included automatically by Web3Forms backend)
+        const form = document.getElementById('contactForm');
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const formData = new FormData(form);
-            const object = Object.fromEntries(formData);
-            const json = JSON.stringify(object);
+            const btnText = document.getElementById('btnText');
+            const btnLoader = document.getElementById('btnLoader');
+            const result = document.getElementById('formResult');
+            const submitBtn = form.querySelector('button[type="submit"]');
 
+            if (!form.checkValidity()) {
+                result.textContent = 'Please complete all required fields.';
+                result.className = 'text-center text-xs mt-4 font-medium text-red-400';
+                return;
+            }
+
+            const json = JSON.stringify(Object.fromEntries(new FormData(form)));
+            
             submitBtn.disabled = true;
-            btnText.textContent = "Sending...";
+            btnText.textContent = 'Verifying...';
             btnLoader.classList.remove('hidden');
-            result.innerHTML = "";
+            result.textContent = '';
 
-            fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: json
-            })
-            .then(async (response) => {
-                let json = await response.json();
-                if (response.status == 200) {
-                    result.innerHTML = "✅ Request sent successfully. Anuj Chaudhary will review shortly.";
-                    result.className = "text-center text-xs mt-4 font-medium tracking-wide text-green-500";
+            try {
+                const response = await fetch(CONFIG.FORM_ACTION, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: json,
+                });
+                const responseData = await response.json();
+                
+                if (response.ok && responseData.success) {
+                    result.textContent = 'Inquiry sent. We will be in touch shortly.';
+                    result.className = 'text-center text-xs mt-4 font-medium text-green-400';
+                    form.reset();
+                    if(typeof turnstile !== 'undefined') turnstile.reset(); // Reset Turnstile if applicable
                 } else {
-                    result.innerHTML = json.message || "Something went wrong.";
-                    result.className = "text-center text-xs mt-4 font-medium tracking-wide text-red-500";
+                    throw new Error(responseData.message || 'Server error');
                 }
-            })
-            .catch(error => {
-                result.innerHTML = "Network error. Please try again.";
-                result.className = "text-center text-xs mt-4 font-medium tracking-wide text-red-500";
-            })
-            .finally(() => {
-                form.reset();
+            } catch (error) {
+                result.textContent = error.message.includes('error') ? error.message : 'Connection error. Please try again.';
+                result.className = 'text-center text-xs mt-4 font-medium text-red-400';
+                if(typeof turnstile !== 'undefined') turnstile.reset();
+            } finally {
                 submitBtn.disabled = false;
-                btnText.textContent = "Submit Request";
+                btnText.textContent = 'Submit Inquiry';
                 btnLoader.classList.add('hidden');
-                setTimeout(() => {
-                    result.style.opacity = '0';
-                    setTimeout(() => { result.innerHTML = ""; result.style.opacity = '1'; }, 300);
-                }, 5000);
-            });
+                setTimeout(() => result.textContent = '', 6000);
+            }
         });
     </script>
 </body>
