@@ -2,7 +2,7 @@ backend:
   name: github
   repo: AnujChaudhari/Web.QuickShop    # ← इसे बदलें
   branch: main
-  auth_url: https://sveltia-cms-auth.kc812213.workers.dev   # ← Cloudflare Worker URL
+ # auth_url: https://sveltia-cms-auth.kc812213.workers.dev   # ← Cloudflare Worker URL
 
 media_folder: "assets/images/uploads"
 public_folder: "/assets/images/uploads"
