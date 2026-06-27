@@ -96,9 +96,6 @@
     <!-- ===== LUCIDE ICONS ===== -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
 
-    <!-- ===== TURNSTILE CAPTCHA ===== -->
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
     <!-- ===== CUSTOM STYLES ===== -->
     <style>
         /* Base */
@@ -497,8 +494,7 @@
                                 <textarea id="message" name="message" required aria-required="true" rows="3" class="w-full input-lux rounded-lg px-4 py-3.5 text-sm font-light text-white resize-y min-h-[100px] placeholder:text-[#888888]/40" placeholder="Tell us about your goals..."></textarea>
                             </div>
 
-                            <!-- Cloudflare Turnstile -->
-                            <div class="cf-turnstile" data-sitekey="0x4AAAAAAAWy7Z0FjR1l1z3N" data-theme="dark"></div>
+                            <!-- ===== NO TURNSTILE ===== -->
 
                             <button type="submit" class="w-full btn-primary py-4 rounded-lg font-bold uppercase tracking-[0.2em] text-[10px] flex justify-center items-center gap-3 disabled:opacity-50 mt-2">
                                 <span id="btnText">Submit Inquiry</span>
@@ -551,7 +547,12 @@
         };
 
         // ============================================================
-        // 2. UTILITY FUNCTIONS
+        // 2. BASE PATH (Fix for CMS Data)
+        // ============================================================
+        const BASE_PATH = '/my-website';
+
+        // ============================================================
+        // 3. UTILITY FUNCTIONS
         // ============================================================
         function escapeHtml(str) {
             if (!str) return '';
@@ -560,6 +561,7 @@
         }
 
         async function fetchWithCache(url, cacheKey, ttl = CONFIG.CACHE_TTL) {
+            const fullUrl = BASE_PATH + url;
             const cached = localStorage.getItem(cacheKey);
             if (cached) {
                 try {
@@ -567,7 +569,7 @@
                     if (Date.now() - timestamp < ttl) return data;
                 } catch (_) {}
             }
-            const res = await fetch(url);
+            const res = await fetch(fullUrl);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const data = await res.json();
             localStorage.setItem(cacheKey, JSON.stringify({ data, timestamp: Date.now() }));
@@ -575,7 +577,7 @@
         }
 
         // ============================================================
-        // 3. RENDER FUNCTIONS
+        // 4. RENDER FUNCTIONS
         // ============================================================
         function renderService(s) {
             return `
@@ -661,7 +663,7 @@
         }
 
         // ============================================================
-        // 4. SECTION LOADER
+        // 5. SECTION LOADER
         // ============================================================
         async function loadSection(endpoint, containerId, renderFn, fallbackMsg) {
             const container = document.getElementById(containerId);
@@ -677,7 +679,7 @@
         }
 
         // ============================================================
-        // 5. DOM READY
+        // 6. DOM READY
         // ============================================================
         document.addEventListener('DOMContentLoaded', () => {
             loadSection('services', 'servicesGrid', renderService, 'Services data pending integration.');
@@ -688,7 +690,7 @@
         });
 
         // ============================================================
-        // 6. MOBILE MENU
+        // 7. MOBILE MENU
         // ============================================================
         let isMobileMenuOpen = false;
         const menuToggle = document.getElementById('menuToggle');
@@ -718,7 +720,7 @@
         document.querySelectorAll('#mobileMenu a').forEach(link => link.addEventListener('click', () => toggleMenu(false)));
 
         // ============================================================
-        // 7. SCROLL REVEAL
+        // 8. SCROLL REVEAL
         // ============================================================
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -728,7 +730,7 @@
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
         // ============================================================
-        // 8. HEADER SCROLL & BACK TO TOP
+        // 9. HEADER SCROLL & BACK TO TOP
         // ============================================================
         const header = document.getElementById('navbar');
         const backToTopBtn = document.getElementById('backToTop');
@@ -751,7 +753,7 @@
         });
 
         // ============================================================
-        // 9. CONTACT FORM
+        // 10. CONTACT FORM (Without Turnstile)
         // ============================================================
         const form = document.getElementById('contactForm');
         form.addEventListener('submit', async (e) => {
@@ -786,14 +788,12 @@
                     result.textContent = '✅ Inquiry sent. We will be in touch shortly.';
                     result.className = 'text-center text-xs mt-4 font-medium text-green-400';
                     form.reset();
-                    if (typeof turnstile !== 'undefined') turnstile.reset();
                 } else {
                     throw new Error(data.message || 'Server error');
                 }
             } catch (error) {
                 result.textContent = 'Connection error. Please try again.';
                 result.className = 'text-center text-xs mt-4 font-medium text-red-400';
-                if (typeof turnstile !== 'undefined') turnstile.reset();
             } finally {
                 submitBtn.disabled = false;
                 btnText.textContent = 'Submit Inquiry';
