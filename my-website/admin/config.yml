@@ -5,13 +5,13 @@ backend:
   # Use Access Token Method - No Worker needed
   # base_url: https://sveltia-auth-proxy.kc812213.workers.dev
 
-media_folder: "assets/images/uploads"
-public_folder: "/assets/images/uploads"
+media_folder: "my-website/assets/images/uploads"
+public_folder: "/my-website/assets/images/uploads"
 
 collections:
   - name: "services"
     label: "Services"
-    folder: "_data/services"
+    folder: "my-website/_data/services"   # ← "my-website/" जोड़ा
     create: true
     format: json                # ✅ IMPORTANT: Creates services.json
     fields:
