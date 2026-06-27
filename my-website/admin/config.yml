@@ -11,9 +11,9 @@ public_folder: "/my-website/assets/images/uploads"
 collections:
   - name: "services"
     label: "Services"
-    folder: "my-website/_data/services"   # ← "my-website/" जोड़ा
+    folder: "my-website/_data/services"   # ✅ सही
     create: true
-    format: json                # ✅ IMPORTANT: Creates services.json
+    format: json
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
@@ -22,9 +22,9 @@ collections:
 
   - name: "projects"
     label: "Projects"
-    folder: "_data/projects"
+    folder: "my-website/_data/projects"   # ✅ यहाँ "my-website/" जोड़ा
     create: true
-    format: json                # ✅ IMPORTANT: Creates projects.json
+    format: json
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Category", name: "category", widget: "string" }
@@ -35,9 +35,9 @@ collections:
 
   - name: "pricing"
     label: "Pricing Plans"
-    folder: "_data/pricing"
+    folder: "my-website/_data/pricing"   # ✅ यहाँ "my-website/" जोड़ा
     create: true
-    format: json                # ✅ IMPORTANT: Creates pricing.json
+    format: json
     fields:
       - { label: "Plan Name", name: "name", widget: "string" }
       - { label: "Price", name: "price", widget: "string" }
@@ -48,9 +48,9 @@ collections:
 
   - name: "testimonials"
     label: "Testimonials"
-    folder: "_data/testimonials"
+    folder: "my-website/_data/testimonials"   # ✅ यहाँ "my-website/" जोड़ा
     create: true
-    format: json                # ✅ IMPORTANT: Creates testimonials.json
+    format: json
     fields:
       - { label: "Client Name", name: "clientName", widget: "string" }
       - { label: "Client Position", name: "clientPosition", widget: "string" }
