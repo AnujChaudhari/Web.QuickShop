@@ -1,59 +1,76 @@
+# ================================================================
+#  Sveltia CMS Configuration – Quick Shop Agency
+# ================================================================
+# This file tells the CMS where to store data and how to structure it.
+# All paths are relative to the repository root.
+# ================================================================
+
 backend:
   name: github
   repo: AnujChaudhari/Web.QuickShop
   branch: main
-  # Use Access Token Method - No Worker needed
+  # Commented: Using Access Token method (no OAuth Worker needed)
   # base_url: https://sveltia-auth-proxy.kc812213.workers.dev
 
+# ===== MEDIA (IMAGE) UPLOADS =====
+# Where uploaded images will be stored (inside my-website folder)
 media_folder: "my-website/assets/images/uploads"
+# Public URL path to access images from the website
 public_folder: "/my-website/assets/images/uploads"
 
-collections:
-  - name: "services"
-    label: "Services"
-    folder: "my-website/_data/services"
-    create: true
-    format: json
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Icon (Lucide name)", name: "icon", widget: "string", required: false }
-      - { label: "Order", name: "order", widget: "number", default: 0 }
+# ================================================================
+#  COLLECTIONS – All Dynamic Content
+# ================================================================
 
-  - name: "projects"
-    label: "Projects"
-    folder: "my-website/_data/projects"   # ✅ यहाँ "my-website/" जोड़ा
-    create: true
-    format: json
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Category", name: "category", widget: "string" }
-      - { label: "Description", name: "description", widget: "text", required: false }
-      - { label: "Image", name: "imageUrl", widget: "image" }
-      - { label: "Live Demo URL", name: "liveDemoUrl", widget: "string" }
-      - { label: "Order", name: "order", widget: "number", default: 0 }
+# ---------- 1. SERVICES ----------
+- name: "services"
+  label: "Services"
+  folder: "my-website/_data/services"   # ✅ Inside my-website folder
+  create: true
+  format: json                           # ✅ Creates services.json
+  fields:
+    - { label: "Title", name: "title", widget: "string" }
+    - { label: "Description", name: "description", widget: "text" }
+    - { label: "Icon (Lucide name)", name: "icon", widget: "string", required: false }
+    - { label: "Order", name: "order", widget: "number", default: 0 }
 
-  - name: "pricing"
-    label: "Pricing Plans"
-    folder: "my-website/_data/pricing"    # ✅ यहाँ "my-website/" जोड़ा
-    create: true
-    format: json
-    fields:
-      - { label: "Plan Name", name: "name", widget: "string" }
-      - { label: "Price", name: "price", widget: "string" }
-      - { label: "Features (List)", name: "features", widget: "list" }
-      - { label: "Button Text", name: "buttonText", widget: "string" }
-      - { label: "Is Popular?", name: "isPopular", widget: "boolean", default: false }
-      - { label: "Order", name: "order", widget: "number", default: 0 }
+# ---------- 2. PROJECTS (Portfolio) ----------
+- name: "projects"
+  label: "Projects"
+  folder: "my-website/_data/projects"   # ✅ Inside my-website folder
+  create: true
+  format: json                           # ✅ Creates projects.json
+  fields:
+    - { label: "Title", name: "title", widget: "string" }
+    - { label: "Category", name: "category", widget: "string" }
+    - { label: "Description", name: "description", widget: "text", required: false }
+    - { label: "Image", name: "imageUrl", widget: "image" }
+    - { label: "Live Demo URL", name: "liveDemoUrl", widget: "string" }
+    - { label: "Order", name: "order", widget: "number", default: 0 }
 
-  - name: "testimonials"
-    label: "Testimonials"
-    folder: "my-website/_data/testimonials"  # ✅ यहाँ "my-website/" जोड़ा
-    create: true
-    format: json
-    fields:
-      - { label: "Client Name", name: "clientName", widget: "string" }
-      - { label: "Client Position", name: "clientPosition", widget: "string" }
-      - { label: "Quote", name: "quote", widget: "text" }
-      - { label: "Client Photo", name: "photoUrl", widget: "image" }
-      - { label: "Rating (1-5)", name: "rating", widget: "number", value_type: "int", default: 5 }
+# ---------- 3. PRICING PLANS ----------
+- name: "pricing"
+  label: "Pricing Plans"
+  folder: "my-website/_data/pricing"    # ✅ Inside my-website folder
+  create: true
+  format: json                           # ✅ Creates pricing.json
+  fields:
+    - { label: "Plan Name", name: "name", widget: "string" }
+    - { label: "Price", name: "price", widget: "string" }
+    - { label: "Features (List)", name: "features", widget: "list" }
+    - { label: "Button Text", name: "buttonText", widget: "string" }
+    - { label: "Is Popular?", name: "isPopular", widget: "boolean", default: false }
+    - { label: "Order", name: "order", widget: "number", default: 0 }
+
+# ---------- 4. TESTIMONIALS ----------
+- name: "testimonials"
+  label: "Testimonials"
+  folder: "my-website/_data/testimonials"  # ✅ Inside my-website folder
+  create: true
+  format: json                              # ✅ Creates testimonials.json
+  fields:
+    - { label: "Client Name", name: "clientName", widget: "string" }
+    - { label: "Client Position", name: "clientPosition", widget: "string" }
+    - { label: "Quote", name: "quote", widget: "text" }
+    - { label: "Client Photo", name: "photoUrl", widget: "image" }
+    - { label: "Rating (1-5)", name: "rating", widget: "number", value_type: "int", default: 5 }
